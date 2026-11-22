@@ -18,98 +18,24 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.shell{max-width
 @media(max-width:760px){.grid{grid-template-columns:1fr 1fr}.stats{gap:8px}.stat{padding:13px}.shell{padding:16px 14px 45px}}@media(max-width:480px){.grid{grid-template-columns:1fr}.top{margin-bottom:14px}.pill{display:none}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:20px}}
 </style></head><body><div class="shell">
 <header class="top"><div class="brand"><div class="logo">✦</div> EXAMENS OEFENEN</div></header>
-<section id="home"><div class="hero" style="padding:22px 0 8px"><h1 style="font-size:34px">Welk vak wil je oefenen?</h1></div>
-<div class="grid">
-<div class="card subject" style="--glow:#7b8cff"><div class="emoji">📚</div><h3>Nederlands</h3><p>Samenvatting nog toevoegen.</p></div>
-<div class="card subject" style="--glow:#58d6d0"><div class="emoji">📐</div><h3>Wiskunde</h3><p>Kies een onderdeel:</p><div class="chapter"><button class="secondary" onclick="begin('wiskunde','M1')">Transformaties</button><button class="secondary" onclick="begin('wiskunde','M2')">Algebra</button><button class="secondary" onclick="begin('wiskunde','M3')">Hoeken</button><button class="secondary" onclick="begin('wiskunde','M4')">Machten</button></div><p><button class="primary" onclick="begin('wiskunde')">Start alles</button></p></div>
-<div class="card subject" style="--glow:#ff82b2"><div class="emoji">🏛️</div><h3>Geschiedenis</h3><p>Kies een hoofdstuk:</p><div class="chapter"><button class="secondary" onclick="begin('geschiedenis','H1')">H1 · Olympische Spelen</button><button class="secondary" onclick="begin('geschiedenis','H2')">H2 · Tijdvakken</button><button class="secondary" onclick="begin('geschiedenis','H3')">H3 · Griekse samenleving</button><button class="secondary" onclick="begin('geschiedenis','H4')">H4 · Griekse cultuur</button><button class="secondary" onclick="begin('geschiedenis','H5')">H5 · Politiek</button></div><p><button class="primary" onclick="begin('geschiedenis')">Start alles</button></p></div>
+<section id="home">
+<div class="hero" style="min-height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;margin:auto">
+<h1 style="font-size:clamp(38px,7vw,58px)">Examens oefenen</h1>
+<button class="primary" style="font-size:18px;padding:16px 34px" onclick="showSubjects()">Vakken</button>
 </div>
-
 </section>
-<section id="practice" class="hidden"><div class="between"><button class="ghost" onclick="home()">← Alle vakken</button><button class="secondary" onclick="startSession()">Nieuwe reeks</button></div>
-<div class="work"><div class="between"><div><div class="eyebrow" id="subjectLabel">GESCHIEDENIS</div><h2 style="font:800 24px Manrope;margin:6px 0" id="sessionTitle">Oefensessie</h2></div><span class="tag" id="typeLabel">Meerkeuze</span></div><div class="chapter" id="chapters"></div><div class="between" style="margin-top:18px"><span class="meta" id="counter">Vraag 1 / 10</span><span class="meta" id="answered">0 ingevuld</span></div><div class="progress"><div class="bar" id="bar"></div></div><div id="question"></div><div class="between"><button class="secondary" id="prev" onclick="move(-1)">← Vorige</button><div class="row"><button class="secondary" id="next" onclick="move(1)">Volgende →</button><button class="primary" id="finish" onclick="finish()">Klaar · Verbeter mijn werk</button></div></div><div id="result" class="hidden"></div></div></section>
-<div class="foot">EXAMENS OEFENEN · Je antwoorden blijven op dit toestel bewaard.</div></div>
-<script>
-const bank={
-geschiedenis:[
-['H1 · Olympische Spelen','Wat is het verschil tussen het verleden en geschiedenis?','mc',['Het verleden is wat vroeger gebeurde; geschiedenis is een poging om ons een beeld van dat verleden te vormen.','Ze betekenen exact hetzelfde.','Geschiedenis is de toekomst.'],0,'Het verleden is voorbij. Met bewaarde sporen en bronnen proberen we ons een beeld van dat verleden te vormen.'],
-['H1 · Olympische Spelen','Vul aan: gebeurtenissen en bronnen situeren we in de ___, in de ruimte en in de maatschappelijke domeinen.','fill','tijd','We situeren gebeurtenissen in de tijd, de ruimte en maatschappelijke domeinen.'],
-['H1 · Olympische Spelen','Waar of niet waar? Geschiedenis is hetzelfde als het verleden.','tf','Niet waar','Geschiedenis is een poging om ons een beeld te vormen van het verleden.'],
-['H1 · Olympische Spelen','Wat zijn historische bronnen?','mc',['Sporen uit het verleden die bewaard zijn gebleven','Toekomstplannen','Alleen verzonnen verhalen'],0,'Sporen die bewaard bleven tot in het heden worden bronnen.'],
-['H1 · Olympische Spelen','Kies alle verschillen die in je samenvatting staan over de Spelen nu.','multi',['Meer sporten','Meer medailles','Mondiaal','Minder gevaarlijk','Alleen plaatselijk'],[0,1,2,3],'Je samenvatting vermeldt meer sporten, meer medailles, mondiaal en minder gevaarlijk.'],
-['H2 · Tijdvakken','Welke periode begint rond 1945 en loopt tot nu?','mc',['Hedendaagse tijd','Moderne tijd','Middeleeuwen'],0,'De hedendaagse tijd loopt ca. 1945 tot nu.'],
-['H2 · Tijdvakken','Zet van oud naar nieuw: middeleeuwen, prehistorie, klassieke oudheid.','order',['Prehistorie','Klassieke oudheid','Middeleeuwen'],'Prehistorie|Klassieke oudheid|Middeleeuwen','De volgorde is prehistorie, klassieke oudheid en daarna middeleeuwen.'],
-['H2 · Samenlevingen','Welke activiteit hoort bij voedselverzamelaars-jagers?','mc',['Voedsel verzamelen en jagen','Fabrieksarbeid','Hoogtechnologische diensten'],0,'De tabel vermeldt voedsel verzamelen en jagen.'],
-['H2 · Samenlevingen','Welke twee activiteiten horen bij een landbouwsamenleving?','multi',['Akkerbouw','Veeteelt','Fabrieksarbeid','Hoogtechnologische diensten'],[0,1],'Landbouwsamenlevingen steunen op akkerbouw en veeteelt.'],
-['H2 · Samenlevingen','Welke energiebronnen noemt de samenvatting bij industriële samenlevingen?','mc',['Steenkool, gas en olie','Alleen menselijke energie','Alleen wind en water'],0,'De tabel noemt steenkool, gas en olie.'],
-['H2 · Domeinen','Koppel het domein aan het voorbeeld: wetten en rechten.','mc',['Politiek','Cultureel','Economisch'],0,'Afspraken, organisatie, regels, wetten, rechten en plichten horen bij politiek.'],
-['H2 · Domeinen','Welke vier maatschappelijke domeinen staan in het schema?','multi',['Economisch','Sociaal','Cultureel','Politiek','Sportief'],[0,1,2,3],'De vier domeinen zijn economisch, sociaal, cultureel en politiek.'],
-['H3 · Griekse samenleving','Welke natuurlijke omgeving beschrijft de gesloten landbouwsamenleving?','mc',['Mediterraan klimaat, weinig vruchtbare vlaktes en veel bergachtig gebied','Poolklimaat en uitgestrekte vlaktes','Tropisch regenwoud'],0,'Dat zijn de drie elementen uit het schema.'],
-['H3 · Griekse samenleving','Vul aan: de lokale markt werkte met een ___.','fill','ruileconomie','Het schema vermeldt lokale markt en ruileconomie.'],
-['H3 · Griekse samenleving','Wat kan bevolkingsgroei veroorzaken in een open landbouwsamenleving?','multi',['Voedseltekort','Sociale spanningen','Beroepsspecialisatie','Minder behoefte aan grond'],[0,1,2],'Dit zijn de oorzaken die in de samenvatting worden opgesomd.'],
-['H3 · Griekse samenleving','Noem een kenmerk van de open landbouwsamenleving.','mc',['Kolonisatie en verspreiding van de Griekse levenswijze','Geen regionale contacten','Geen handel'],0,'Andere kenmerken zijn regionale contacten, langeafstandshandel, geldeconomie en sommige poleis worden steden.'],
-['H4 · Griekse cultuur','Welke evolutie in de beeldhouwkunst staat in de samenvatting?','mc',['Van statisch en geïdealiseerd naar dynamisch en realistischer','Van realistisch naar statisch','Er verandert niets'],0,'Het schema beschrijft de evolutie naar dynamiek, emotie en realisme.'],
-['H4 · Griekse cultuur','Welke kenmerken horen bij de Griekse bouwkunst?','multi',['Ideale verhoudingen','Evenwicht en balans','Felle kleuren','Scheve verhoudingen'],[0,1,2],'De drie kenmerken zijn ideale verhoudingen, evenwicht en balans en felle kleuren.'],
-['H4 · Griekse cultuur','Wat was het effect van een gemeenschappelijke Griekse taal?','mc',['Makkelijkere communicatie en gemeenschappelijke cultuur','Geen contact','Verdwijnen van literatuur'],0,'De samenvatting legt de link met samenhorigheidsgevoel.'],
-['H4 · Griekse cultuur','Wat vind je terug in de Griekse literatuur?','multi',['Mythen en verhalen over goden en helden','Griekse waarden','Gedichten van Homeros','Toneelstukken'],[0,1,2,3],'Dit zijn de inhoud en voorbeelden uit de samenvatting.'],
-['H4 · Griekse cultuur','Wat betekent polytheïsme?','mc',['Meerdere goden','Eén god','Geen goden'],0,'De samenvatting noemt natuurreligie en polytheïsme: meerdere goden.'],
-['H4 · Griekse cultuur','Wat is de rol van de Griekse filosofie volgens het schema?','mc',['Natuurverschijnselen verklaren door kritisch denken; basis voor wetenschap','Alleen verhalen vertellen','Een vorm van handel'],0,'Dat staat in het schema bij Griekse filosofie.'],
-['H4 · Griekse cultuur','Welk onderdeel is de verticale steun van een tempel?','mc',['De zuil','Het fronton','Het fries'],0,'De zuil is de verticale steun van de tempel.'],
-['H5 · Politiek','Waardoor werd iemands positie in de standenmaatschappij bepaald?','multi',['Geboorte','Grondbezit','Geografische afkomst','Geslacht','Leeftijd'],[0,1,2,3,4],'Alle vijf factoren staan in de samenvatting.'],
-['H5 · Politiek','Welke volgorde van bestuursvormen staat in je samenvatting?','order',['Monarchie','Aristocratie','Democratie'],'Monarchie|Aristocratie|Democratie','De volgorde is monarchie, aristocratie en democratie.'],
-['H5 · Politiek','Welke taak had de volksvergadering?','mc',['Wetgevende macht; alle burgers','Uitvoerende macht','Rechterlijke macht'],0,'De volksvergadering had de wetgevende macht en bestond uit alle burgers.'],
-['H5 · Politiek','Hoe werden magistraten aangeduid volgens de samenvatting?','mc',['Burgers via loting; strategen via verkiezingen','Erfopvolging','Door buitenlandse koningen'],0,'Magistraten via loting, strategen via verkiezingen.'],
-['H5 · Politiek','Wat deed de volksrechtbank?','mc',['Rechterlijke macht; burgers via loting','Wetgevende macht','Uitvoerende macht'],0,'Dat is de omschrijving in het schema.'],
-['H5 · Politiek','Wanneer sloten Griekse poleis bondgenootschappen?','mc',['Bij externe dreiging','Altijd in vredestijd','Alleen voor sport'],0,'Het schema vermeldt bondgenootschappen bij externe dreiging.'],
-['H5 · Politiek','Welke twee bonden staan tegenover elkaar in het schema?','mc',['Delisch-Attische Zeebond en Peloponnesische Bond','NAVO en EU','Romeinse en Perzische bond'],0,'Het schema noemt de Delisch-Attische Zeebond tegenover de Peloponnesische Bond.']
-],
-wiskunde:[
-['M1 · Transformaties','Wat is een dekpunt bij een spiegeling om een as?','mc',['Een punt dat op de spiegelas ligt','Een punt buiten de figuur','Het midden van elke zijde'],0,'Een dekpunt ligt op de as.'],
-['M1 · Transformaties','Wat zijn congruente figuren?','mc',['Figuren met dezelfde vorm en dezelfde grootte','Figuren met dezelfde kleur','Figuren met dezelfde omtrek'],0,'Dat is de definitie uit je samenvatting.'],
-['M1 · Transformaties','Welke drie zaken bepaalt een vector bij een translatie?','multi',['Richting','Zin','Grootte','Kleur'],[0,1,2],'De vector bepaalt richting, zin en grootte.'],
-['M1 · Transformaties','Een rotatie van +60° gebeurt in welke zin?','mc',['Tegenwijzerzin','Wijzerzin','Geen draairichting'],0,'Een positieve hoek is tegenwijzerzin; een negatieve hoek is wijzerzin.'],
-['M2 · Algebra','Herleid: 9x + 3x','fill','12x','Gelijksoortige eentermen: 9x + 3x = 12x.'],
-['M2 · Algebra','Herleid: 7b − 2b + 3b','fill','8b','7 − 2 + 3 = 8, dus 8b.'],
-['M2 · Algebra','Wat is de coëfficiënt van −9y?','mc',['−9','y','9y'],0,'De coëfficiënt is het getalgedeelte: −9.'],
-['M2 · Algebra','Bereken 3t − 2 voor t = 0,5.','fill','-0,5','3 × 0,5 − 2 = −0,5.'],
-['M2 · Algebra','Werk uit: 3(2x − 4)','mc',['6x − 12','6x − 4','5x − 12'],0,'Distributiviteit: 3 × 2x en 3 × −4.'],
-['M3 · Hoeken','Hoe groot is het complement van 38°?','fill','52','Complementaire hoeken hebben samen 90°.'],
-['M3 · Hoeken','Hoe groot is het supplement van 125°?','fill','55','Supplementaire hoeken hebben samen 180°.'],
-['M3 · Hoeken','Hoe groot is de som van de binnenhoeken van een driehoek?','mc',['180°','90°','360°'],0,'De som van de hoeken in een driehoek is 180°.'],
-['M3 · Hoeken','Overstaande hoeken zijn ...','mc',['Even groot','Altijd complementair','Altijd kleiner dan 90°'],0,'Overstaande hoeken zijn even groot.'],
-['M3 · Hoeken','Twee aangrenzende hoeken die samen 180° zijn, noem je ...','mc',['Nevenhoeken','Overstaande hoeken','Complementaire hoeken'],0,'Nevenhoeken zijn aangrenzend en supplementair.'],
-['M4 · Machten','Bereken 2³','fill','8','2 × 2 × 2 = 8.'],
-['M4 · Machten','Wat is 5⁰ (met 5 ≠ 0)?','mc',['1','0','5'],0,'Elke niet-nul basis tot de macht nul is 1.'],
-['M4 · Machten','Schrijf 10⁻² als breuk.','mc',['1/100','100','−100'],0,'a⁻ⁿ = 1/aⁿ.'],
-['M4 · Wetenschappelijke notatie','Schrijf 4 500 000 in wetenschappelijke notatie.','mc',['4,5 × 10⁶','45 × 10⁵','4,5 × 10⁻⁶'],0,'De komma schuift zes plaatsen naar links.'],
-['M4 · Wetenschappelijke notatie','Schrijf 0,00032 in wetenschappelijke notatie.','mc',['3,2 × 10⁻⁴','3,2 × 10⁴','32 × 10⁻⁴'],0,'De komma schuift vier plaatsen naar rechts, dus exponent −4.']
-]};
-let subject='',chapterFilter='',items=[],answers={},idx=0,checked=false,score=0;
-const $=id=>document.getElementById(id);
-function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function stats(){}
-function begin(s,ch=''){subject=s;chapterFilter=ch;$('practice').classList.remove('hidden');startSession();$('practice').scrollIntoView({behavior:'smooth',block:'start'})}
-function home(){$('practice').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})}
-function startSession(){let source=bank[subject].filter(q=>!chapterFilter||q[0].startsWith(chapterFilter));items=shuffle(source).slice(0,Math.min(12,source.length));answers={};idx=0;checked=false;$('result').classList.add('hidden');$('subjectLabel').textContent=subject.toUpperCase();$('sessionTitle').textContent=subject==='geschiedenis'?'Geschiedenis · oefenmix':'Wiskunde · oefenmix';$('chapters').innerHTML=[...new Set(items.map(x=>x[0]))].map(x=>'<span>'+x+'</span>').join('');render()}
-function render(){let q=items[idx];$('counter').textContent='Vraag '+(idx+1)+' / '+items.length;$('answered').textContent=Object.keys(answers).length+' ingevuld';$('bar').style.width=(Object.keys(answers).length/items.length*100)+'%';$('typeLabel').textContent=({mc:'Meerkeuze',fill:'Invullen',tf:'Juist / fout',multi:'Meerdere antwoorden',order:'Volgorde'})[q[2]];$('prev').disabled=idx===0;$('next').disabled=idx===items.length-1||checked;$('finish').disabled=checked;
-let body='<div class="meta">'+q[0]+'</div><div class="qtitle">'+q[1]+'</div>';
-if(q[2]==='mc'||q[2]==='tf'){let opts=q[2]==='tf'?['Waar','Niet waar']:q[3];body+='<div class="answers">'+opts.map((o,i)=>'<button class="choice '+(answers[idx]===i?'sel':'')+'" '+(checked?'disabled':'')+' onclick="choose('+i+')">'+o+'</button>').join('')+'</div>'}
-if(q[2]==='multi'){body+='<div class="answers">'+q[3].map((o,i)=>'<button class="choice '+((answers[idx]||[]).includes(i)?'sel':'')+'" '+(checked?'disabled':'')+' onclick="toggle('+i+')">□ &nbsp;'+o+'</button>').join('')+'</div><div class="tiny">Duid alle juiste antwoorden aan.</div>'}
-if(q[2]==='fill'){body+='<input class="answer" id="fill" placeholder="Typ je antwoord..." value="'+(answers[idx]||'')+'" '+(checked?'disabled':'')+' oninput="answers[idx]=this.value">';if(subject==='wiskunde')body+=keypad()}
-if(q[2]==='order'){let val=answers[idx]||q[3].join('|');body+='<div class="answers">'+val.split('|').map((o,i)=>'<div class="choice" style="display:flex;justify-content:space-between;align-items:center">'+o+' <span><button class="secondary" onclick="swap('+i+',-1)">↑</button> <button class="secondary" onclick="swap('+i+',1)">↓</button></span></div>').join('')+'</div><div class="tiny">Gebruik de pijlen om de volgorde te veranderen.</div>'}
-if(subject==='wiskunde'&&!checked)body+='<div class="tiny" style="margin-top:18px">✎ Tekenhulp voor meetkunde</div><canvas class="draw" id="canvas" width="640" height="240"></canvas><button class="ghost" onclick="clearDraw()">Wis tekening</button>';
-if(checked){let ok=isCorrect(q,answers[idx]);body+='<div class="feedback '+(ok?'good':'bad')+'"><b>'+(ok?'Goed gedaan!':'Nog niet juist.')+'</b><br>Correct antwoord: '+correctText(q)+'<br><br>'+q[q.length-1]+'</div>'}
-$('question').innerHTML=body;if(subject==='wiskunde'&&!checked&&$('canvas'))setupCanvas()}
-function keypad(){return '<div class="keypad">'+['7','8','9','÷','4','5','6','×','1','2','3','−','0',',','+','(',')','²','√','°','←','C'].map(k=>'<button onclick="key(\''+k+'\')">'+k+'</button>').join('')+'</div>'}
-function key(k){let el=$('fill');let v=el.value;if(k==='C')v='';else if(k==='←')v=v.slice(0,-1);else v+=k;el.value=v;answers[idx]=v}
-function choose(i){answers[idx]=i;render()}function toggle(i){let a=answers[idx]||[];answers[idx]=a.includes(i)?a.filter(x=>x!==i):[...a,i];render()}
-function swap(i,d){let a=(answers[idx]||items[idx][3].join('|')).split('|'),j=i+d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];answers[idx]=a.join('|');render()}
-function norm(s){return String(s??'').toLowerCase().replace(/[\s°]/g,'').replace(',','.').replace('−','-')}
-function isCorrect(q,a){if(q[2]==='mc')return a===q[4];if(q[2]==='tf')return (a===0?'Waar':'Niet waar')===q[3];if(q[2]==='multi')return JSON.stringify([...(a||[])].sort())===JSON.stringify([...q[4]].sort());if(q[2]==='fill')return norm(a)===norm(q[3]);if(q[2]==='order')return a===q[4];return false}
-function correctText(q){if(q[2]==='mc')return q[3][q[4]];if(q[2]==='tf')return q[3];if(q[2]==='multi')return q[4].map(i=>q[3][i]).join(', ');if(q[2]==='fill')return q[3];return q[4].replaceAll('|',' → ')}
-function move(d){idx=Math.max(0,Math.min(items.length-1,idx+d));render()}
-function finish(){checked=true;score=items.filter((q,i)=>isCorrect(q,answers[i])).length;localStorage.done=(+(localStorage.done||0))+items.length;localStorage.correct=(+(localStorage.correct||0))+score;render();$('result').classList.remove('hidden');$('result').innerHTML='<div class="feedback good"><div class="resultbig">'+score+'/'+items.length+'</div><b>Jouw resultaat</b><p>'+Math.round(score/items.length*100)+'% juist. Bekijk de uitleg bij elke vraag en probeer daarna een nieuwe willekeurige reeks.</p><button class="primary" onclick="startSession()">Nog een reeks ↗</button> <button class="secondary" onclick="home()">Terug naar overzicht</button></div>';stats()}
-function setupCanvas(){let c=$('canvas'),ctx=c.getContext('2d'),on=false;c.onpointerdown=e=>{on=true;let r=c.getBoundingClientRect();ctx.beginPath();ctx.moveTo((e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height);c.setPointerCapture(e.pointerId)};c.onpointermove=e=>{if(!on)return;let r=c.getBoundingClientRect();ctx.lineWidth=2;ctx.strokeStyle='#273c88';ctx.lineTo((e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height);ctx.stroke()};c.onpointerup=()=>on=false}
-function clearDraw(){let c=$('canvas');if(c)c.getContext('2d').clearRect(0,0,c.width,c.height)}
-stats();
-</script></body></html>
+<section id="subjects" class="hidden">
+<div class="between"><button class="ghost" onclick="showHome()">← Terug</button></div>
+<div class="hero" style="padding:20px 0 12px"><h1 style="font-size:32px">Kies een vak</h1></div>
+<div class="grid">
+<div class="card subject" style="--glow:#7b8cff" onclick="showChapters('nederlands')"><div class="emoji">📚</div><h3>Nederlands</h3></div>
+<div class="card subject" style="--glow:#58d6d0" onclick="showChapters('wiskunde')"><div class="emoji">📐</div><h3>Wiskunde</h3></div>
+<div class="card subject" style="--glow:#ff82b2" onclick="showChapters('geschiedenis')"><div class="emoji">🏛️</div><h3>Geschiedenis</h3></div>
+</div>
+</section>
+<section id="chapters" class="hidden">
+<div class="between"><button class="ghost" onclick="showSubjects()">← Vakken</button></div>
+<div class="hero" style="padding:20px 0 12px"><h1 id="chapterHeading" style="font-size:32px">Kies een onderdeel</h1></div>
+<div id="chapterOptions" class="grid"></div>
+</section>
+>
