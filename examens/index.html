@@ -1,41 +1,67 @@
 <!doctype html>
-<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10162b"><title>Examens oefenen</title>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Examens oefenen</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
-:root{--bg:#0b1020;--panel:#151d33;--panel2:#1b2742;--line:#2a3654;--txt:#f4f6ff;--muted:#9ca9c7;--blue:#7c8cff;--cyan:#58d6d0;--pink:#ff82b2;--yellow:#ffd477;--green:#69d6a4;--red:#ff8290}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#26376b 0,transparent 35%),radial-gradient(ellipse at 100% 20%,#342452 0,transparent 30%),var(--bg);color:var(--txt);font:15px 'DM Sans',sans-serif;min-height:100vh}
-button,input,select{font:inherit}button{cursor:pointer;border:0}.shell{max-width:1120px;margin:auto;padding:24px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:34px}.brand{display:flex;align-items:center;gap:12px;font:800 20px Manrope}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--pink));display:grid;place-items:center;font-size:21px;box-shadow:0 8px 28px #7c8cff55}.pill{padding:8px 12px;border:1px solid var(--line);border-radius:99px;color:var(--muted);font-size:12px}
-.hero{padding:34px 0 24px;max-width:760px}.eyebrow{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:11px}.hero h1{font:800 clamp(34px,6vw,58px)/1.05 Manrope;margin:12px 0}.grad{background:linear-gradient(90deg,#a7b3ff,#6fe0d5,#ff9ac2);background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:17px;max-width:620px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 30px}.stat,.card,.work{background:linear-gradient(145deg,#1a2540dd,#121a2ddd);border:1px solid var(--line);border-radius:22px;padding:19px;box-shadow:0 14px 40px #0002}.stat b{font:800 24px Manrope;display:block}.stat span{font-size:12px;color:var(--muted)}
-.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 14px}.sectionhead h2{font:800 22px Manrope;margin:0}.sectionhead p{color:var(--muted);margin:4px 0 0;font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.subject{position:relative;overflow:hidden;min-height:190px;transition:.2s;cursor:pointer}.subject:hover{transform:translateY(-4px);border-color:#7486ff;box-shadow:0 18px 45px #5369ff22}.subject:after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;right:-40px;bottom:-60px;background:var(--glow);filter:blur(4px);opacity:.25}.emoji{font-size:28px}.subject h3{font:800 20px Manrope;margin:15px 0 5px}.subject p{color:var(--muted);font-size:13px;margin:0 0 16px}.tag{display:inline-block;background:#ffffff0d;border:1px solid var(--line);padding:6px 9px;border-radius:99px;font-size:11px;color:#c4cfff}
-.primary{background:linear-gradient(110deg,#7284ff,#9b78ff);color:white;padding:12px 18px;border-radius:13px;font-weight:800;box-shadow:0 7px 22px #7486ff33;transition:.15s}.primary:hover{filter:brightness(1.12);transform:translateY(-1px)}.secondary{background:#ffffff0c;border:1px solid var(--line);color:var(--txt);padding:11px 15px;border-radius:12px;font-weight:700}.ghost{background:transparent;color:var(--muted);padding:9px 12px;border-radius:10px}.hidden{display:none!important}
-.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.work{margin-top:18px;padding:clamp(18px,4vw,30px)}.progress{height:9px;border-radius:20px;background:#ffffff12;overflow:hidden;margin:14px 0}.bar{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));width:0;transition:.3s;border-radius:20px}
-.qtitle{font:800 clamp(21px,3vw,29px)/1.25 Manrope;margin:18px 0}.meta{color:var(--muted);font-size:12px}.answers{display:grid;gap:10px;margin:18px 0}.choice{text-align:left;padding:14px 16px;background:#ffffff08;border:1px solid var(--line);border-radius:13px;color:var(--txt);transition:.15s}.choice:hover,.choice.sel{border-color:var(--blue);background:#778aff1c}.choice.correct{border-color:var(--green);background:#69d6a41a}.choice.incorrect{border-color:var(--red);background:#ff82901a}
-.answer{width:100%;background:#0e162b;border:1px solid var(--line);border-radius:13px;padding:15px;color:white;outline:none}.answer:focus{border-color:var(--blue)}.feedback{margin:16px 0;padding:14px 16px;border-radius:13px;background:#ffffff0a;border:1px solid var(--line);color:var(--muted)}.feedback.good{border-color:#69d6a466;color:#b6f4d6}.feedback.bad{border-color:#ff829066;color:#ffc1c8}
-.keypad{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:10px 0}.keypad button{background:#263452;color:white;border:1px solid #354565;border-radius:9px;padding:10px 3px}.draw{width:100%;max-width:640px;height:240px;background:#fff;border-radius:12px;touch-action:none;display:block;margin:10px 0}.tiny{font-size:12px;color:var(--muted)}.chapter{display:flex;gap:8px;flex-wrap:wrap}.chapter span{border:1px solid var(--line);border-radius:99px;padding:6px 10px;font-size:11px;color:var(--muted)}
-.resultbig{font:800 40px Manrope}.toast{color:var(--yellow);font-size:13px}.foot{margin-top:40px;color:#73809d;font-size:12px;text-align:center}
-@media(max-width:760px){.grid{grid-template-columns:1fr 1fr}.stats{gap:8px}.stat{padding:13px}.shell{padding:16px 14px 45px}}@media(max-width:480px){.grid{grid-template-columns:1fr}.top{margin-bottom:14px}.pill{display:none}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:20px}}
-</style></head><body><div class="shell">
-<header class="top"><div class="brand"><div class="logo">✦</div> EXAMENS OEFENEN</div></header>
-<section id="home">
-<div class="hero" style="min-height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;margin:auto">
-<h1 style="font-size:clamp(38px,7vw,58px)">Examens oefenen</h1>
-<button class="primary" style="font-size:18px;padding:16px 34px" onclick="showSubjects()">Vakken</button>
-</div>
-</section>
-<section id="subjects" class="hidden">
-<div class="between"><button class="ghost" onclick="showHome()">← Terug</button></div>
-<div class="hero" style="padding:20px 0 12px"><h1 style="font-size:32px">Kies een vak</h1></div>
-<div class="grid">
-<div class="card subject" style="--glow:#7b8cff" onclick="showChapters('nederlands')"><div class="emoji">📚</div><h3>Nederlands</h3></div>
-<div class="card subject" style="--glow:#58d6d0" onclick="showChapters('wiskunde')"><div class="emoji">📐</div><h3>Wiskunde</h3></div>
-<div class="card subject" style="--glow:#ff82b2" onclick="showChapters('geschiedenis')"><div class="emoji">🏛️</div><h3>Geschiedenis</h3></div>
-</div>
-</section>
-<section id="chapters" class="hidden">
-<div class="between"><button class="ghost" onclick="showSubjects()">← Vakken</button></div>
-<div class="hero" style="padding:20px 0 12px"><h1 id="chapterHeading" style="font-size:32px">Kies een onderdeel</h1></div>
-<div id="chapterOptions" class="grid"></div>
-</section>
->
+:root{color-scheme:dark;--bg:#0b1020;--panel:#17213a;--line:#34415f;--text:#f5f6ff;--muted:#b4bfd8;--blue:#788cff;--green:#69d6a4;--red:#ff8290}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#26376b 0,transparent 38%),var(--bg);color:var(--text);font:16px Arial,sans-serif}.shell{max-width:900px;margin:auto;padding:24px 18px 60px}.brand{font-weight:bold;letter-spacing:1px;margin:10px 0 30px}.page{min-height:65vh}.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.center h1{font-size:clamp(38px,7vw,58px)}h1,h2{line-height:1.15}.muted{color:var(--muted)}button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:13px 18px;background:#293755;color:var(--text)}button:hover{filter:brightness(1.18)}.primary{background:linear-gradient(110deg,#7284ff,#9b78ff);font-weight:bold}.back{background:transparent;border:1px solid var(--line);margin:8px 0 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:left;min-height:100px}.tile h3{margin:0 0 7px}.tile p{margin:0;color:var(--muted);font-size:14px}.question{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}.answers{display:grid;gap:10px;margin:18px 0}.answer{width:100%;text-align:left;background:#202d49;border:1px solid #3b4968}.answer.selected{border-color:var(--blue);background:#313d68}.answer.correct{border-color:var(--green)}.answer.wrong{border-color:var(--red)}input[type=text]{width:100%;padding:14px;border:1px solid var(--line);border-radius:10px;background:#0e162b;color:white;font:inherit}.feedback{padding:14px;border-radius:10px;margin:14px 0;background:#202d49}.good{color:var(--green)}.bad{color:var(--red)}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row button{margin-top:8px}.hidden{display:none!important}.small{font-size:13px;color:var(--muted)}@media(max-width:500px){.shell{padding:16px 13px}.tile{padding:18px}}
+</style></head><body><main class="shell">
+<div class="brand">✦ EXAMENS OEFENEN</div>
+<section id="home" class="page center"><h1>Examens oefenen</h1><p class="muted">Kies een vak en oefen stap voor stap.</p><button class="primary" onclick="showSubjects()">Vakken</button></section>
+<section id="subjects" class="page hidden"><button class="back" onclick="showPage('home')">← Terug</button><h1>Kies een vak</h1><div class="grid">
+<button class="tile" onclick="showChapters('nederlands')"><h3>📚 Nederlands</h3><p>Taal en tekst</p></button>
+<button class="tile" onclick="showChapters('wiskunde')"><h3>📐 Wiskunde</h3><p>Rekenen, algebra en meetkunde</p></button>
+<button class="tile" onclick="showChapters('geschiedenis')"><h3>🏛️ Geschiedenis</h3><p>De Griekse oudheid en tijdvakken</p></button>
+</div></section>
+<section id="chapters" class="page hidden"><button class="back" onclick="showPage('subjects')">← Vakken</button><h1 id="chapterTitle">Kies een onderdeel</h1><div id="chapterGrid" class="grid"></div></section>
+<section id="practice" class="page hidden"><button class="back" onclick="showPage('chapters')">← Hoofdstukken</button><div class="small" id="topicLabel"></div><div class="question"><div class="small" id="counter"></div><h2 id="questionText"></h2><div id="answerArea"></div><div id="feedback" class="feedback hidden"></div><div class="row"><button class="primary" id="checkBtn" onclick="checkAnswer()">Klaar voor verbetering</button><button id="nextBtn" class="hidden" onclick="nextQuestion()">Volgende vraag →</button></div></div><p class="small" id="score"></p></section>
+</main>
+<script>
+const banks={
+geschiedenis:{
+'Olympische Spelen':[
+{q:'In welke Griekse plaats werden de oorspronkelijke Olympische Spelen gehouden?',a:['Olympia','Athene','Sparta','Korinthe'],c:0,e:'De spelen werden gehouden in Olympia, ter ere van Zeus.'},
+{q:'Om de hoeveel jaar werden de Olympische Spelen gehouden?',a:['Elke 2 jaar','Elke 4 jaar','Elke 5 jaar','Elk jaar'],c:1,e:'De spelen vonden om de vier jaar plaats.'},
+{q:'Voor welke god werden de spelen georganiseerd?',a:['Apollo','Poseidon','Zeus','Ares'],c:2,e:'De spelen waren een religieus feest ter ere van Zeus.'}],
+'Tijdvakken':[
+{q:'Wat betekent prehistorie?',a:['De tijd vóór geschreven bronnen','De tijd van de Romeinen','De middeleeuwen','De moderne tijd'],c:0,e:'De prehistorie is de periode vóór er geschreven bronnen zijn.'},
+{q:'Welke bron is een geschreven historische bron?',a:['Een vaas','Een brief','Een munt','Een gebouw'],c:1,e:'Een brief bevat geschreven informatie.'}],
+'Griekse samenleving':[
+{q:'Hoe noemden de Grieken hun zelfstandige stadstaten?',a:['Provincies','Polissen','Rijken','Kolonies'],c:1,e:'Een polis was een zelfstandige Griekse stadstaat.'},
+{q:'Welke twee bekende Griekse poleis waren Athene en ...?',a:['Sparta','Troje','Rome','Thebe'],c:0,e:'Athene en Sparta waren twee belangrijke stadstaten.'}],
+'Griekse cultuur':[
+{q:'Welke taal spraken de oude Grieken?',a:['Latijn','Grieks','Egyptisch','Aramees'],c:1,e:'De Grieken spraken verschillende vormen van het Grieks.'},
+{q:'Hoe noem je verhalen over goden en helden?',a:['Mythen','Wetten','Kronieken','Sagen van ridders'],c:0,e:'Mythen zijn traditionele verhalen over goden en helden.'}],
+'Politiek':[
+{q:'In welke stadstaat ontstond de vroege democratie?',a:['Sparta','Athene','Olympia','Milete'],c:1,e:'Athene ontwikkelde een vroege vorm van democratie.'},
+{q:'Wat betekent democratie letterlijk ongeveer?',a:['Macht van het volk','Macht van de koning','Macht van het leger','Macht van priesters'],c:0,e:'Het woord verwijst naar macht van het volk.'}]},
+wiskunde:{
+'Transformaties':[
+{q:'Een punt A(2, 3) wordt 4 naar rechts en 1 omhoog verschoven. Wat zijn de nieuwe coördinaten?',a:['(6, 4)','(−2, 2)','(6, 2)','(3, 7)'],c:0,e:'Tel 4 op bij x en 1 bij y: (6, 4).'},
+{q:'Wat doet een spiegeling in de x-as met de y-coördinaat?',a:['Die blijft gelijk','Het teken verandert','Je telt 1 op','Je vermenigvuldigt met 2'],c:1,e:'Bij spiegeling in de x-as wordt (x,y) → (x,−y).'}],
+'Algebra':[
+{q:'Vereenvoudig: 3x + 2x − 4.',a:['5x − 4','5x + 4','6x − 4','x − 4'],c:0,e:'3x en 2x zijn gelijksoortige termen: samen 5x.'},
+{q:'Los op: x + 7 = 12.',a:['x = 19','x = 5','x = 7','x = 4'],c:1,e:'Trek 7 af van beide kanten: x = 5.'},
+{q:'Werk uit: 3(a + 2).',a:['3a + 2','a + 6','3a + 6','5a'],c:2,e:'Vermenigvuldig 3 met beide termen.'}],
+'Hoeken':[
+{q:'Hoe groot is een rechte hoek?',a:['45°','90°','180°','360°'],c:1,e:'Een rechte hoek is 90 graden.'},
+{q:'Hoe groot is een gestrekte hoek?',a:['90°','120°','180°','360°'],c:2,e:'Een gestrekte hoek is 180 graden.'},
+{q:'Twee hoeken op een rechte lijn zijn samen 180°. Eén hoek is 65°. Hoe groot is de andere?',a:['115°','125°','105°','65°'],c:0,e:'180° − 65° = 115°.'}],
+'Machten':[
+{q:'Wat is 2³?',a:['6','8','9','12'],c:1,e:'2 × 2 × 2 = 8.'},
+{q:'Wat is 10²?',a:['20','100','1000','12'],c:1,e:'10 × 10 = 100.'},
+{q:'Wat is 5⁰?',a:['0','1','5','25'],c:1,e:'Elk niet-nul getal tot de macht nul is 1.'}]},
+nederlands:{
+'Taal en tekst':[
+{q:'Wat is een zelfstandig naamwoord?',a:['Een woord voor een mens, dier, ding of begrip','Een woord dat een handeling noemt','Een woord dat een voorzetsel vervangt','Een voegwoord'],c:0,e:'Een zelfstandig naamwoord benoemt bijvoorbeeld een persoon, dier, ding of begrip.'},
+{q:'Welke woordsoort is "snel" in "Hij loopt snel"?',a:['Zelfstandig naamwoord','Bijwoord','Lidwoord','Voorzetsel'],c:1,e:'Snel zegt hier iets over hoe hij loopt en is een bijwoord.'},
+{q:'Wat is het onderwerp in "De leerlingen maken hun examen"?',a:['maken','hun examen','De leerlingen','examen'],c:2,e:'Vraag: wie maken? De leerlingen.'}]}
+};
+let subject='',topic='',questions=[],index=0,points=0,selected=null,answered=false;
+const chapters={nederlands:['Taal en tekst'],wiskunde:['Transformaties','Algebra','Hoeken','Machten'],geschiedenis:['Olympische Spelen','Tijdvakken','Griekse samenleving','Griekse cultuur','Politiek']};
+function showPage(id){['home','subjects','chapters','practice'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));}
+function showSubjects(){showPage('subjects')}
+function showChapters(s){subject=s;document.getElementById('chapterTitle').textContent=s[0].toUpperCase()+s.slice(1)+' – kies een hoofdstuk';const grid=document.getElementById('chapterGrid');grid.innerHTML='';chapters[s].forEach(t=>{const b=document.createElement('button');b.className='tile';b.innerHTML='<h3>'+t+'</h3><p>Start met oefenen</p>';b.onclick=()=>startTopic(t);grid.appendChild(b)});const all=document.createElement('button');all.className='tile';all.innerHTML='<h3>⭐ Alles oefenen</h3><p>Alle vragen van dit vak</p>';all.onclick=()=>startTopic('Alles oefenen');grid.appendChild(all);showPage('chapters')}
+function startTopic(t){topic=t;questions=t==='Alles oefenen'?Object.values(banks[subject]).flat():banks[subject][t]||[];questions=[...questions];index=0;points=0;document.getElementById('topicLabel').textContent=subject+' · '+t;showPage('practice');renderQuestion()}
+function renderQuestion(){selected=null;answered=false;const q=questions[index];document.getElementById('counter').textContent='Vraag '+(index+1)+' van '+questions.length;document.getElementById('questionText').textContent=q.q;document.getElementById('feedback').classList.add('hidden');document.getElementById('checkBtn').classList.remove('hidden');document.getElementById('nextBtn').classList.add('hidden');const area=document.getElementById('answerArea');area.innerHTML='';const list=document.createElement('div');list.className='answers';q.a.forEach((a,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=a;b.onclick=()=>{if(answered)return;selected=i;[...list.children].forEach(x=>x.classList.remove('selected'));b.classList.add('selected')};list.appendChild(b)});area.appendChild(list);document.getElementById('score').textContent='Score: '+points+' / '+index}
+function checkAnswer(){if(answered)return;if(selected===null){alert('Kies eerst een antwoord.');return}answered=true;const q=questions[index],ok=selected===q.c;if(ok)points++;const buttons=document.querySelectorAll('.answer');buttons[q.c].classList.add('correct');if(!ok)buttons[selected].classList.add('wrong');const f=document.getElementById('feedback');f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'Goed gedaan! ':'Nog niet juist. ')+q.e;f.classList.remove('hidden');document.getElementById('checkBtn').classList.add('hidden');document.getElementById('nextBtn').classList.remove('hidden');document.getElementById('nextBtn').textContent=index===questions.length-1?'Resultaat bekijken':'Volgende vraag →'}
+function nextQuestion(){if(index<questions.length-1){index++;renderQuestion();return}const pct=Math.round(points/questions.length*100);document.getElementById('counter').textContent='Oefening afgerond';document.getElementById('questionText').textContent='Je behaalde '+points+' op '+questions.length+' ('+pct+'%).';document.getElementById('answerArea').innerHTML='<p class="muted">'+(pct>=70?'Goed gewerkt! Blijf oefenen.':'Oefen de moeilijke onderdelen nog eens.')+'</p>';document.getElementById('feedback').classList.add('hidden');document.getElementById('nextBtn').classList.add('hidden');document.getElementById('checkBtn').classList.remove('hidden');document.getElementById('checkBtn').textContent='Opnieuw oefenen';document.getElementById('checkBtn').onclick=()=>startTopic(topic);document.getElementById('score').textContent='Eindscore: '+points+' / '+questions.length}
+</script></body></html>
