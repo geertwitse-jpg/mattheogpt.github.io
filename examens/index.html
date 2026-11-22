@@ -87,7 +87,7 @@ wiskunde:[
 let subject='',chapterFilter='',items=[],answers={},idx=0,checked=false,score=0;
 const $=id=>document.getElementById(id);
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function stats(){let d=+(localStorage.done||0),c=+(localStorage.correct||0);$('totalDone').textContent=d;$('mastered').textContent=(d?Math.round(c/d*100):0)+'%';$('homeBar').style.width=(d?Math.round(c/d*100):0)+'%';$('homeProgress').textContent=d?d+' vragen gemaakt · '+c+' juist beantwoord':'Nog geen oefeningen gemaakt. Je eerste reeks wacht op je!'}
+function stats(){}
 function begin(s,ch=''){subject=s;chapterFilter=ch;$('practice').classList.remove('hidden');startSession();$('practice').scrollIntoView({behavior:'smooth',block:'start'})}
 function home(){$('practice').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})}
 function startSession(){let source=bank[subject].filter(q=>!chapterFilter||q[0].startsWith(chapterFilter));items=shuffle(source).slice(0,Math.min(12,source.length));answers={};idx=0;checked=false;$('result').classList.add('hidden');$('subjectLabel').textContent=subject.toUpperCase();$('sessionTitle').textContent=subject==='geschiedenis'?'Geschiedenis · oefenmix':'Wiskunde · oefenmix';$('chapters').innerHTML=[...new Set(items.map(x=>x[0]))].map(x=>'<span>'+x+'</span>').join('');render()}
