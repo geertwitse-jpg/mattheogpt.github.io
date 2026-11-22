@@ -93,15 +93,13 @@ wiskunde:[
 ['M4 · Wetenschappelijke notatie','Schrijf 4 500 000 in wetenschappelijke notatie.','mc',['4,5 × 10⁶','45 × 10⁵','4,5 × 10⁻⁶'],0,'De komma schuift zes plaatsen naar links.'],
 ['M4 · Wetenschappelijke notatie','Schrijf 0,00032 in wetenschappelijke notatie.','mc',['3,2 × 10⁻⁴','3,2 × 10⁴','32 × 10⁻⁴'],0,'De komma schuift vier plaatsen naar rechts, dus exponent −4.']
 ]};
-let subject='',items=[],answers={},idx=0,checked=false,score=0;
+let subject='',chapterFilter='',items=[],answers={},idx=0,checked=false,score=0;
 const $=id=>document.getElementById(id);
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 function stats(){}
-function showSubjects(){$('home').classList.add('hidden');$('subjects').classList.remove('hidden')}
-function showHome(){$('subjects').classList.add('hidden');$('home').classList.remove('hidden')}
-function begin(s){if(s==='nederlands'){alert('Upload je samenvatting Nederlands hier in ChatGPT en vraag om ze aan Examensprint toe te voegen. Dan vullen we dit vak met oefeningen uit jouw leerstof.');return}subject=s;$('subjects').classList.add('hidden');$('practice').classList.remove('hidden');startSession()}
-function home(){$('practice').classList.add('hidden');$('subjects').classList.remove('hidden');stats()}
-function startSession(){items=shuffle(bank[subject]).slice(0,Math.min(12,bank[subject].length));answers={};idx=0;checked=false;$('result').classList.add('hidden');$('subjectLabel').textContent=subject.toUpperCase();$('sessionTitle').textContent=subject==='geschiedenis'?'Geschiedenis · oefenmix':'Wiskunde · oefenmix';$('chapters').innerHTML=[...new Set(items.map(x=>x[0]))].map(x=>'<span>'+x+'</span>').join('');render()}
+function begin(s,ch=''){if(s==='nederlands'){alert('Voor Nederlands zijn er nog geen oefeningen toegevoegd.');return}subject=s;chapterFilter=ch;$('subjects').classList.add('hidden');$('practice').classList.remove('hidden');startSession();$('practice').scrollIntoView({behavior:'smooth',block:'start'})}
+function home(){$('practice').classList.add('hidden');$('subjects').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function startSession(){let source=bank[subject].filter(q=>!chapterFilter||q[0].startsWith(chapterFilter));items=shuffle(source).slice(0,Math.min(12,source.length));answers={};idx=0;checked=false;$('result').classList.add('hidden');$('subjectLabel').textContent=subject.toUpperCase();$('sessionTitle').textContent=subject==='geschiedenis'?'Geschiedenis · oefenmix':'Wiskunde · oefenmix';$('chapters').innerHTML=[...new Set(items.map(x=>x[0]))].map(x=>'<span>'+x+'</span>').join('');render()}
 function render(){let q=items[idx];$('counter').textContent='Vraag '+(idx+1)+' / '+items.length;$('answered').textContent=Object.keys(answers).length+' ingevuld';$('bar').style.width=(Object.keys(answers).length/items.length*100)+'%';$('typeLabel').textContent=({mc:'Meerkeuze',fill:'Invullen',tf:'Juist / fout',multi:'Meerdere antwoorden',order:'Volgorde'})[q[2]];$('prev').disabled=idx===0;$('next').disabled=idx===items.length-1||checked;$('finish').disabled=checked;
 let body='<div class="meta">'+q[0]+'</div><div class="qtitle">'+q[1]+'</div>';
 if(q[2]==='mc'||q[2]==='tf'){let opts=q[2]==='tf'?['Waar','Niet waar']:q[3];body+='<div class="answers">'+opts.map((o,i)=>'<button class="choice '+(answers[idx]===i?'sel':'')+'" '+(checked?'disabled':'')+' onclick="choose('+i+')">'+o+'</button>').join('')+'</div>'}
